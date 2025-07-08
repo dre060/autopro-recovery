@@ -1,6 +1,19 @@
 "use client";
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <style jsx global>{`
@@ -72,17 +85,24 @@ export default function Home() {
 
       {/* Header */}
       <header style={{ backgroundColor: '#2c2c2c', color: 'white', position: 'relative', zIndex: 50 }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          padding: isMobile ? '0.75rem' : '1rem', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center' 
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '12px' }}>
             <img
               src="/logo.png"
               alt="Auto Pro Logo"
               className="flash-animation"
-              style={{ width: '48px', height: '48px' }}
+              style={{ width: isMobile ? '40px' : '48px', height: isMobile ? '40px' : '48px' }}
             />
             <div>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>AUTO PRO</h1>
-              <p style={{ fontSize: '0.875rem', margin: 0 }}>TOWING & RECOVERY</p>
+              <h1 style={{ fontSize: isMobile ? '1.125rem' : '1.5rem', fontWeight: 'bold', margin: 0 }}>AUTO PRO</h1>
+              <p style={{ fontSize: isMobile ? '0.625rem' : '0.875rem', margin: 0 }}>TOWING & RECOVERY</p>
             </div>
           </div>
           <a
@@ -91,15 +111,16 @@ export default function Home() {
             style={{ 
               backgroundColor: '#d32f2f', 
               color: 'white', 
-              padding: '0.75rem 1.5rem', 
+              padding: isMobile ? '0.5rem 1rem' : '0.75rem 1.5rem', 
               borderRadius: '4px', 
               fontWeight: '600', 
               textDecoration: 'none',
               display: 'inline-block',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: isMobile ? '0.875rem' : '1rem'
             }}
           >
-            CALL NOW
+            {isMobile ? 'CALL' : 'CALL NOW'}
           </a>
         </div>
       </header>
@@ -107,8 +128,8 @@ export default function Home() {
       {/* Hero Section */}
       <section style={{ 
         position: 'relative', 
-        height: '70vh', 
-        minHeight: '500px', 
+        height: isMobile ? '60vh' : '70vh', 
+        minHeight: isMobile ? '400px' : '500px', 
         display: 'flex', 
         alignItems: 'center', 
         overflow: 'hidden',
@@ -124,24 +145,33 @@ export default function Home() {
           zIndex: 1 
         }}></div>
 
-        {/* Content - Positioned Lower */}
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', padding: '0 1rem', marginTop: '10%' }}>
+        {/* Content - Positioned Lower for Mobile */}
+        <div style={{ 
+          position: 'relative', 
+          zIndex: 2, 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          padding: isMobile ? '0 1rem' : '0 1rem', 
+          marginTop: isMobile ? '15%' : '10%',
+          width: '100%'
+        }}>
           <div style={{ maxWidth: '48rem' }}>
             <h2 className="slide-in" style={{ 
-              fontSize: '2.5rem', 
+              fontSize: isMobile ? '1.5rem' : '2.5rem', 
               fontWeight: 'bold', 
               color: 'white', 
-              marginBottom: '1.5rem',
+              marginBottom: isMobile ? '1rem' : '1.5rem',
               lineHeight: '1.2',
               textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
             }}>
               Fast, Reliable, and Affordable Towing Services
             </h2>
             <p className="slide-in" style={{ 
-              fontSize: '1.25rem', 
+              fontSize: isMobile ? '0.875rem' : '1.25rem', 
               color: 'rgba(255, 255, 255, 0.95)',
               textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-              animationDelay: '0.3s'
+              animationDelay: '0.3s',
+              lineHeight: isMobile ? '1.4' : '1.6'
             }}>
               Based in Leesburg, serving Orlando and surrounding areas 24/7. 
               Call us anytime for towing and roadside assistance.
@@ -151,66 +181,76 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section style={{ padding: '4rem 0', backgroundColor: '#f5f5f5' }}>
+      <section style={{ padding: isMobile ? '2rem 0' : '4rem 0', backgroundColor: '#f5f5f5' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 className="slide-in" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem', textAlign: 'center' }}>Our Services</h2>
+          <h2 className="slide-in" style={{ 
+            fontSize: isMobile ? '1.5rem' : '2rem', 
+            fontWeight: 'bold', 
+            marginBottom: isMobile ? '1.5rem' : '2rem', 
+            textAlign: 'center' 
+          }}>Our Services</h2>
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-            gap: '1.5rem' 
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: isMobile ? '1rem' : '1.5rem' 
           }}>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• 24/7 Emergency Towing</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• 24/7 Emergency Towing</h3>
             </div>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• Roadside Assistance</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• Roadside Assistance</h3>
             </div>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• Vehicle Recovery</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• Vehicle Recovery</h3>
             </div>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• Accident Recovery</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• Accident Recovery</h3>
             </div>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• Motorcycle Towing</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• Motorcycle Towing</h3>
             </div>
-            <div className="hover-lift" style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '600' }}>• Heavy Duty Towing</h3>
+            <div className="hover-lift" style={{ backgroundColor: 'white', padding: isMobile ? '1rem' : '1.5rem', borderRadius: '8px', boxShadow: '0 3px 10px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: isMobile ? '1rem' : '1.25rem', fontWeight: '600' }}>• Heavy Duty Towing</h3>
             </div>
           </div>
         </div>
       </section>
 
       {/* Why Choose Us Section */}
-      <section style={{ padding: '4rem 0', backgroundColor: 'white' }}>
+      <section style={{ padding: isMobile ? '2rem 0' : '4rem 0', backgroundColor: 'white' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 className="slide-in" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem', textAlign: 'center' }}>Why Choose Us</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+          <h2 className="slide-in" style={{ 
+            fontSize: isMobile ? '1.5rem' : '2rem', 
+            fontWeight: 'bold', 
+            marginBottom: isMobile ? '1.5rem' : '2rem', 
+            textAlign: 'center' 
+          }}>Why Choose Us</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
             <div>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li className="slide-in" style={{ marginBottom: '1rem', display: 'flex', animationDelay: '0.1s' }}>
-                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: '1.25rem' }}>•</span>
-                  <span style={{ fontSize: '1.125rem' }}>Fast response times</span>
+                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: isMobile ? '1rem' : '1.25rem' }}>•</span>
+                  <span style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}>Fast response times</span>
                 </li>
                 <li className="slide-in" style={{ marginBottom: '1rem', display: 'flex', animationDelay: '0.2s' }}>
-                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: '1.25rem' }}>•</span>
-                  <span style={{ fontSize: '1.125rem' }}>Professional service</span>
+                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: isMobile ? '1rem' : '1.25rem' }}>•</span>
+                  <span style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}>Professional service</span>
                 </li>
                 <li className="slide-in" style={{ marginBottom: '1rem', display: 'flex', animationDelay: '0.3s' }}>
-                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: '1.25rem' }}>•</span>
-                  <span style={{ fontSize: '1.125rem' }}>Competitive rates</span>
+                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: isMobile ? '1rem' : '1.25rem' }}>•</span>
+                  <span style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}>Competitive rates</span>
                 </li>
               </ul>
             </div>
             <div>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li className="slide-in" style={{ marginBottom: '1rem', display: 'flex', animationDelay: '0.4s' }}>
-                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: '1.25rem' }}>•</span>
-                  <span style={{ fontSize: '1.125rem' }}>Licensed & Insured</span>
+                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: isMobile ? '1rem' : '1.25rem' }}>•</span>
+                  <span style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}>Licensed & Insured</span>
                 </li>
                 <li className="slide-in" style={{ marginBottom: '1rem', display: 'flex', animationDelay: '0.5s' }}>
-                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: '1.25rem' }}>•</span>
-                  <span style={{ fontSize: '1.125rem' }}>Experienced Drivers</span>
+                  <span style={{ color: '#ffb400', marginRight: '0.5rem', fontSize: isMobile ? '1rem' : '1.25rem' }}>•</span>
+                  <span style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}>Experienced Drivers</span>
                 </li>
               </ul>
             </div>
@@ -219,72 +259,94 @@ export default function Home() {
       </section>
 
       {/* Service Area Section - Enhanced */}
-      <section style={{ padding: '4rem 0', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)' }}>
+      <section style={{ padding: isMobile ? '2rem 0' : '4rem 0', background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem', textAlign: 'center' }}>
-          <h2 className="slide-in" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem' }}>Service Area</h2>
+          <h2 className="slide-in" style={{ 
+            fontSize: isMobile ? '1.5rem' : '2rem', 
+            fontWeight: 'bold', 
+            marginBottom: isMobile ? '1.5rem' : '2rem' 
+          }}>Service Area</h2>
           <div className="glow-animation" style={{ 
             backgroundColor: '#ffb400', 
             color: '#2c2c2c', 
-            padding: '2rem', 
+            padding: isMobile ? '1.5rem' : '2rem', 
             borderRadius: '10px',
             maxWidth: '800px',
             margin: '0 auto'
           }}>
-            <p style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
+            <p style={{ 
+              fontSize: isMobile ? '1rem' : '1.25rem', 
+              fontWeight: '600', 
+              marginBottom: '1rem' 
+            }}>
               🚗 Based in Leesburg, serving Lake County and Central Florida 24/7 🚗
             </p>
-            <p style={{ fontSize: '1rem' }}>
+            <p style={{ fontSize: isMobile ? '0.875rem' : '1rem' }}>
               Emergency towing • Roadside assistance • Fast response times
             </p>
           </div>
-          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ 
+            marginTop: '2rem', 
+            display: 'flex', 
+            justifyContent: 'center', 
+            gap: '1rem', 
+            flexWrap: 'wrap' 
+          }}>
             <span className="hover-lift" style={{ 
               backgroundColor: 'white', 
-              padding: '0.5rem 1rem', 
+              padding: isMobile ? '0.4rem 0.8rem' : '0.5rem 1rem', 
               borderRadius: '20px',
               boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: isMobile ? '0.875rem' : '1rem'
             }}>📍 Leesburg</span>
             <span className="hover-lift" style={{ 
               backgroundColor: 'white', 
-              padding: '0.5rem 1rem', 
+              padding: isMobile ? '0.4rem 0.8rem' : '0.5rem 1rem', 
               borderRadius: '20px',
               boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: isMobile ? '0.875rem' : '1rem'
             }}>📍 Orlando</span>
             <span className="hover-lift" style={{ 
               backgroundColor: 'white', 
-              padding: '0.5rem 1rem', 
+              padding: isMobile ? '0.4rem 0.8rem' : '0.5rem 1rem', 
               borderRadius: '20px',
               boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: isMobile ? '0.875rem' : '1rem'
             }}>📍 Surrounding Areas</span>
           </div>
         </div>
       </section>
 
       {/* Contact Us Section */}
-      <section style={{ padding: '4rem 0', backgroundColor: 'white' }}>
+      <section style={{ padding: isMobile ? '2rem 0' : '4rem 0', backgroundColor: 'white' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 className="slide-in" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '3rem', textAlign: 'center' }}>Contact Us</h2>
+          <h2 className="slide-in" style={{ 
+            fontSize: isMobile ? '1.5rem' : '2rem', 
+            fontWeight: 'bold', 
+            marginBottom: isMobile ? '2rem' : '3rem', 
+            textAlign: 'center' 
+          }}>Contact Us</h2>
           
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-            gap: '3rem',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: isMobile ? '1.5rem' : '3rem',
             textAlign: 'center'
           }}>
             {/* Phone */}
             <div className="hover-lift" style={{ 
-              padding: '2rem',
+              padding: isMobile ? '1.5rem' : '2rem',
               backgroundColor: '#f5f5f5',
               borderRadius: '10px',
               cursor: 'pointer'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📞</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Call Us 24/7</h3>
+              <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem' }}>📞</div>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Call Us 24/7</h3>
               <a href="tel:+13522577658" style={{ 
-                fontSize: '1.25rem', 
+                fontSize: isMobile ? '1.125rem' : '1.25rem', 
                 color: '#d32f2f',
                 textDecoration: 'none',
                 fontWeight: 'bold'
@@ -298,20 +360,20 @@ export default function Home() {
 
             {/* Address */}
             <div className="hover-lift" style={{ 
-              padding: '2rem',
+              padding: isMobile ? '1.5rem' : '2rem',
               backgroundColor: '#f5f5f5',
               borderRadius: '10px',
               cursor: 'pointer'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📍</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Service Location</h3>
-              <p style={{ fontSize: '1.125rem', lineHeight: '1.6' }}>
+              <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem' }}>📍</div>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Service Location</h3>
+              <p style={{ fontSize: isMobile ? '1rem' : '1.125rem', lineHeight: '1.6' }}>
                 806 Hood Ave<br />
                 Leesburg, FL 34748<br />
                 <a href="https://maps.google.com/?q=806+Hood+Ave+Leesburg+FL+34748" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   style={{ color: '#d32f2f', textDecoration: 'none', fontSize: '1rem', marginTop: '0.5rem', display: 'inline-block' }}>
+                   style={{ color: '#d32f2f', textDecoration: 'none', fontSize: isMobile ? '0.875rem' : '1rem', marginTop: '0.5rem', display: 'inline-block' }}>
                   📍 Get Directions
                 </a>
               </p>
@@ -319,14 +381,14 @@ export default function Home() {
 
             {/* Hours */}
             <div className="hover-lift" style={{ 
-              padding: '2rem',
+              padding: isMobile ? '1.5rem' : '2rem',
               backgroundColor: '#f5f5f5',
               borderRadius: '10px',
               cursor: 'pointer'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🕐</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Service Hours</h3>
-              <p style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffb400' }}>
+              <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem' }}>🕐</div>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Service Hours</h3>
+              <p style={{ fontSize: isMobile ? '1.125rem' : '1.25rem', fontWeight: 'bold', color: '#ffb400' }}>
                 24/7 AVAILABLE
               </p>
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
@@ -338,12 +400,17 @@ export default function Home() {
           {/* Call to Action */}
           <div style={{ 
             textAlign: 'center', 
-            marginTop: '3rem',
-            padding: '2rem',
+            marginTop: isMobile ? '2rem' : '3rem',
+            padding: isMobile ? '1.5rem' : '2rem',
             backgroundColor: '#ffb400',
             borderRadius: '10px'
           }}>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2c2c2c', marginBottom: '1rem' }}>
+            <p style={{ 
+              fontSize: isMobile ? '1.25rem' : '1.5rem', 
+              fontWeight: 'bold', 
+              color: '#2c2c2c', 
+              marginBottom: '1rem' 
+            }}>
               Need Immediate Assistance?
             </p>
             <a
@@ -352,12 +419,12 @@ export default function Home() {
               style={{ 
                 backgroundColor: '#d32f2f', 
                 color: 'white', 
-                padding: '1rem 2rem', 
+                padding: isMobile ? '0.75rem 1.5rem' : '1rem 2rem', 
                 borderRadius: '4px', 
                 fontWeight: '600', 
                 textDecoration: 'none',
                 display: 'inline-block',
-                fontSize: '1.25rem',
+                fontSize: isMobile ? '1rem' : '1.25rem',
                 cursor: 'pointer'
               }}
             >
@@ -368,7 +435,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: '#2c2c2c', color: 'white', padding: '2rem 0' }}>
+      <footer style={{ backgroundColor: '#2c2c2c', color: 'white', padding: isMobile ? '1.5rem 0' : '2rem 0' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem', textAlign: 'center' }}>
           <p>&copy; 2025 Auto Pro Towing & Recovery. All rights reserved.</p>
           <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', opacity: '0.8' }}>
