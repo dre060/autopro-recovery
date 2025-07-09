@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
+  const [showCookieBanner, setShowCookieBanner] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -11,8 +12,19 @@ export default function Home() {
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  const handleCookieAccept = () => {
+    setShowCookieBanner(false);
+    // In production, you would set a cookie or use localStorage here
+  };
+
+  const handleCookieDecline = () => {
+    setShowCookieBanner(false);
+    // In production, you would handle the decline action here
+  };
 
   return (
     <div className="min-h-screen">
@@ -82,6 +94,103 @@ export default function Home() {
           box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
       `}</style>
+
+      {/* Cookie Consent Banner */}
+      {showCookieBanner && (
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#2c2c2c',
+          color: 'white',
+          padding: isMobile ? '1rem' : '1.5rem',
+          boxShadow: '0 -2px 10px rgba(0,0,0,0.3)',
+          zIndex: 1000,
+          borderTop: '3px solid #ffb400'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div style={{ flex: 1 }}>
+              <h3 style={{ 
+                fontSize: isMobile ? '1rem' : '1.125rem', 
+                fontWeight: 'bold', 
+                marginBottom: '0.5rem' 
+              }}>
+                🍪 Cookie Notice
+              </h3>
+              <p style={{ 
+                fontSize: isMobile ? '0.875rem' : '1rem', 
+                opacity: 0.9,
+                lineHeight: 1.5
+              }}>
+                We use cookies to improve your experience on our website. By continuing to browse, you agree to our use of cookies.
+              </p>
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              gap: '0.75rem',
+              flexShrink: 0
+            }}>
+              <button
+                onClick={handleCookieAccept}
+                style={{
+                  backgroundColor: '#ffb400',
+                  color: '#2c2c2c',
+                  border: 'none',
+                  padding: isMobile ? '0.5rem 1rem' : '0.75rem 1.5rem',
+                  borderRadius: '4px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: isMobile ? '0.875rem' : '1rem',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#ffa000';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#ffb400';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                Accept
+              </button>
+              <button
+                onClick={handleCookieDecline}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  border: '2px solid white',
+                  padding: isMobile ? '0.5rem 1rem' : '0.75rem 1.5rem',
+                  borderRadius: '4px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: isMobile ? '0.875rem' : '1rem',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = 'white';
+                  e.target.style.color = '#2c2c2c';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'transparent';
+                  e.target.style.color = 'white';
+                }}
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <header style={{ backgroundColor: '#2c2c2c', color: 'white', position: 'relative', zIndex: 50 }}>
@@ -452,7 +561,7 @@ export default function Home() {
           }}>
             {/* Facebook */}
             <a 
-              href="https://www.facebook.com/people/Auto-pro-towing-and-Recovery/61570337345530/" 
+              href="https://www.facebook.com/profile.php?id=61578165300806" 
               target="_blank" 
               rel="noopener noreferrer"
               style={{ 
