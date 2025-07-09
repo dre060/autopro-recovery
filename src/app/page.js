@@ -106,7 +106,7 @@ export default function Home() {
             </div>
           </div>
           <a
-            href="tel:+13522577658"
+            href="tel:+13522177658"
             className="pulse-animation"
             style={{ 
               backgroundColor: '#d32f2f', 
@@ -345,13 +345,13 @@ export default function Home() {
             }}>
               <div style={{ fontSize: isMobile ? '2rem' : '3rem', marginBottom: '1rem' }}>📞</div>
               <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2c2c2c' }}>Call Us 24/7</h3>
-              <a href="tel:+13522577658" style={{ 
+              <a href="tel:+13522177658" style={{ 
                 fontSize: isMobile ? '1.125rem' : '1.25rem', 
                 color: '#d32f2f',
                 textDecoration: 'none',
                 fontWeight: 'bold'
               }}>
-                (352) 257-7658
+                (352) 217-7658
               </a>
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
                 Emergency towing available
@@ -414,7 +414,7 @@ export default function Home() {
               Need Immediate Assistance?
             </p>
             <a
-              href="tel:+13522577658"
+              href="tel:+13522177658"
               className="pulse-animation"
               style={{ 
                 backgroundColor: '#d32f2f', 
@@ -428,7 +428,7 @@ export default function Home() {
                 cursor: 'pointer'
               }}
             >
-              CALL NOW: (352) 257-7658
+              CALL NOW: (352) 217-7658
             </a>
           </div>
         </div>
